@@ -5,39 +5,89 @@
  */
 package com.scheduler.boot.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Date;
+
 /**
  *
  * @author Grzegorz
  */
 public class TaskDTO {
-    private String number;
-    private String name;
-    private String deadline;
+    private int id;
+    private String title;
+    private String start;
+    private String end;
 
-    public void TaskDTO(String number, String name, String deadline){        
-        this.number = number;
-        this.name = name;
-        this.deadline = deadline;
+    public TaskDTO(){
+        
+    }
+    
+    public TaskDTO(int id, String title, String start, String end){
+        this.id = id;        
+        this.title = title;
+        this.start = start;
+        this.end = end;
     }
     
     /**
      * @return the number
      */
-    public String getNumber() {
-        return number;
+    public int getId() {
+        return id;
     }
 
     /**
      * @return the name
      */
-    public String getName() {
-        return name;
+    
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    /**
+     * @return the end
+     */
+    public String getEnd() {
+        return end;
     }
 
     /**
-     * @return the deadline
+     * @param end the end to set
      */
-    public String getDeadline() {
-        return deadline;
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
+    /**
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @return the start
+     */
+    public String getStart() {
+        return start;
+    }
+
+    /**
+     * @param start the start to set
+     */
+    public void setStart(String start) {
+        this.start = start;
     }
 }

@@ -5,22 +5,39 @@
  */
 package com.scheduler.boot.model;
 
+import com.scheduler.boot.dto.TaskDTO;
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author Grzegorz
  */
-public class Task {
-    private int id;
+@Entity
+@Table(name = "task")
+public class Task implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private String name;
+    
+    @Temporal(TemporalType.TIMESTAMP)
     private Date deadline;
 
     public Task(){
         
     }
     
-    public Task(int id, String name, Date deadline){
+    public Task(Integer id, String name, Date deadline){
         this.id = id;
         this.name = name;
         this.deadline = deadline;
@@ -29,7 +46,7 @@ public class Task {
     /**
      * @return the number
      */
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -45,5 +62,34 @@ public class Task {
      */
     public Date getDeadline() {
         return deadline;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @param deadline the deadline to set
+     */
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+    
+    public TaskDTO getDTOObject(){
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        if(deadline == null){
+            deadline = new Date();
+        }
+        return new TaskDTO(id, name, df.format(deadline), df.format(deadline));
     }
 }

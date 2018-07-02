@@ -5,8 +5,8 @@
  */
 package com.scheduler.boot.restcontroller;
 
+import com.scheduler.boot.dto.TaskDTO;
 import org.springframework.web.bind.annotation.RestController;
-import com.scheduler.boot.model.Task;
 import com.scheduler.boot.service.TaskService;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +14,7 @@ import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,24 +32,26 @@ public class TaskController {
     private TaskService taskService;
     
     @RequestMapping(path = "/tasks/task/{taskId}", produces = "application/json")
-    public Task getTask(@PathVariable String taskId){
+    public TaskDTO getTask(@PathVariable String taskId){
         return taskService.getTask(new Integer(taskId));
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(path = "/tasks", produces = "application/json")
-    public List<Task> getTasks(){
+    public List<TaskDTO> getTasks(){
         return taskService.getAllTasks();
     }
    
     @PostMapping(path = "/tasks/task", consumes = "application/json", produces = "application/json")
-    public Task addTask(@RequestBody Task task){
-        taskService.addTask(task);
-        return task;
+    public TaskDTO addTask(@RequestBody TaskDTO task){
+        System.out.println("start: " + task.getStart());
+        TaskDTO t = taskService.addTask(task);
+        return t;
     }
 
     @DeleteMapping(path = "/tasks/{taskId}")
     public void removeTask(@PathVariable int taskId ){
+        System.out.println("removeTask");
         taskService.removeTask(taskId);
     }
     

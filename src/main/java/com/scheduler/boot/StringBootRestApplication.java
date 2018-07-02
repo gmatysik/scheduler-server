@@ -7,8 +7,10 @@ package com.scheduler.boot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
+@EntityScan("com.scheduler.boot.*")
 public class StringBootRestApplication {
  
      public static void main(String[] args) {
