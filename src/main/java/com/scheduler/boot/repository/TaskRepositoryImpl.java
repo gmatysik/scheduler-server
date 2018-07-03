@@ -3,76 +3,71 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.boot.service;
+package com.scheduler.boot.repository;
 
-import com.scheduler.boot.dto.TaskDTO;
-import java.util.ArrayList;
-import java.util.List;
-import com.scheduler.boot.model.Task;
-import com.scheduler.boot.repository.TaskRepository;
+import com.scheduler.boot.repository.TaskSpringRepository;
+import com.scheduler.boot.repository.TaskTable;
+import com.scheduler.tasks.TaskRepository;
+import com.scheduler.tasks.TaskDTO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Grzegorz
  */
-@Service
-public class TaskService {
-    private List<TaskDTO> tasks = null; 
-    
+@Component
+class TaskRepositoryImpl implements TaskRepository{
+       
     @Autowired
-    private TaskRepository taskRepository;
-    
-    public List<TaskDTO> getAllTasks(){
+    private TaskSpringRepository taskRepository;
+
+    @Override
+    public List<TaskDTO> getAll() {
         List<TaskDTO> result = new ArrayList<>();
         
-        Iterable<Task> source = taskRepository.findAll();
-        for(Task task : source){
+        Iterable<TaskTable> source = taskRepository.findAll();
+        for(TaskTable task : source){
             result.add(task.getDTOObject());
         }
         return result;
     }
-    
-    public TaskDTO getTask(int id){
-        Iterable<Task> source = taskRepository.findAll();
-        for(Task task : source){
+
+    @Override
+    public TaskDTO getTask(int id) {
+        Iterable<TaskTable> source = taskRepository.findAll();
+        for(TaskTable task : source){
             if(task.getId() == id){
                 return task.getDTOObject();
             }
         }
-
         return new TaskDTO();
     }
-    
-    public TaskDTO addTask(TaskDTO task){
-        System.out.println("task: " +   task);
-        Date deadline = null;
+
+    @Override
+    public TaskDTO createTask(TaskDTO task) {
+        Date startDate = null;
         try {
-            deadline = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(task.getStart());
+            startDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(task.getStart());
         } catch (ParseException ex) {
             ex.printStackTrace();
             //Logger.getLogger(TaskService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        Task t = new Task(null, task.getTitle(), deadline);
-                
-        Task res = taskRepository.save(t);
-        
-        //task.setId(t.getId());
+
+        TaskTable t = new TaskTable(null, task.getTitle(), startDate);                
+        TaskTable res = taskRepository.save(t);
         return res.getDTOObject();
     }
 
-     public TaskDTO updateTask(TaskDTO task){
-         Task t = taskRepository.findById(task.getId()).get();
-         
+    @Override
+    public TaskDTO updateTask(TaskDTO task) {
                  Date deadline = null;
+        TaskTable t = taskRepository.findById(task.getId()).get();
         try {
             deadline = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(task.getStart());
         } catch (ParseException ex) {
@@ -81,12 +76,11 @@ public class TaskService {
         }
          t.setDeadline(deadline);
          t.setName(task.getTitle());
-         taskRepository.save(t);
-         return task;
+         return taskRepository.save(t).getDTOObject();
     }
 
+    @Override
     public void removeTask(int taskId) {
         taskRepository.deleteById(taskId);
     }
-    
 }

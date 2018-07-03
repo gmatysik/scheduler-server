@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.boot.repository;
-import org.springframework.data.repository.CrudRepository;
-import com.scheduler.boot.model.Task;
+package com.scheduler.users;
 
 /**
  *
  * @author Grzegorz
  */
-public interface TaskRepository extends CrudRepository<Task, Integer>{
+public class UserDTO {
     
 }

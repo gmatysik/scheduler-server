@@ -5,16 +5,13 @@
  */
 package com.scheduler.boot.restcontroller;
 
-import com.scheduler.boot.dto.TaskDTO;
+import com.scheduler.boot.service.TaskSpringService;
+import com.scheduler.tasks.TaskDTO;
 import org.springframework.web.bind.annotation.RestController;
-import com.scheduler.boot.service.TaskService;
-import java.util.Date;
 import java.util.List;
-import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TaskController {
     
     @Autowired
-    private TaskService taskService;
+    private TaskSpringService taskService;
     
     @RequestMapping(path = "/tasks/task/{taskId}", produces = "application/json")
     public TaskDTO getTask(@PathVariable String taskId){

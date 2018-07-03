@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.boot.model;
+package com.scheduler.boot.repository;
 
-import com.scheduler.boot.dto.TaskDTO;
+import com.scheduler.tasks.TaskDTO;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "task")
-public class Task implements Serializable{
+public class TaskTable implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -33,11 +33,11 @@ public class Task implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date deadline;
 
-    public Task(){
+    public TaskTable(){
         
     }
     
-    public Task(Integer id, String name, Date deadline){
+    public TaskTable(Integer id, String name, Date deadline){
         this.id = id;
         this.name = name;
         this.deadline = deadline;
