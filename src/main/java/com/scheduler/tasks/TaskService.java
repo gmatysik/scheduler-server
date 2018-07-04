@@ -22,5 +22,7 @@ public interface TaskService {
     public TaskDTO updateTask(TaskDTO task);
 
     public void removeTask(int taskId);
+
+    public List<TaskDTO> getNextNTasks(Integer numberOfTasks);
         
 }

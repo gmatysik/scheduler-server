@@ -51,5 +51,10 @@ public class TaskController {
         System.out.println("removeTask");
         taskService.removeTask(taskId);
     }
+
+    @RequestMapping(path = "/tasks/next/{numberOfTasks}", produces = "application/json")
+    public List<TaskDTO> getNextNTasks(@PathVariable String numberOfTasks){
+        return taskService.getNextNTasks(new Integer(numberOfTasks));
+    }
     
 }

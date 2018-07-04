@@ -20,4 +20,6 @@ public interface TaskSpringService {
     public TaskDTO addTask(TaskDTO task);
 
     public void removeTask(int taskId);
+
+    public List<TaskDTO> getNextNTasks(Integer numberOfTasks);
 }

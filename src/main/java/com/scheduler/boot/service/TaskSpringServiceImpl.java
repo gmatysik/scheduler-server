@@ -46,7 +46,13 @@ class TaskSpringServiceImpl implements TaskSpringService{
         return taskService.addTask(task);
     }
 
+    @Override
     public void removeTask(int taskId) {
         taskService.removeTask(taskId);
     }    
+
+    @Override
+    public List<TaskDTO> getNextNTasks(Integer numberOfTasks) {
+        return taskService.getNextNTasks(numberOfTasks);
+    }
 }

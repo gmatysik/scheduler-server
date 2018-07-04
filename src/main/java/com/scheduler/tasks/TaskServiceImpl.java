@@ -16,13 +16,9 @@ import java.util.Date;
  */
 class TaskServiceImpl implements TaskService {
     private List<TaskDTO> tasks = null; 
-    
-    //private TaskRepository taskRep;
     private final TaskRepository taskRepository;
-
     
     public TaskServiceImpl(TaskRepository taskRepository){
-        //this.taskRep = taskRep;
         this.taskRepository = taskRepository;
     }
     
@@ -77,6 +73,11 @@ class TaskServiceImpl implements TaskService {
     public void removeTask(int taskId) {
         //taskRep.deleteById(taskId);
         taskRepository.removeTask(taskId);
+    }
+
+    @Override
+    public List<TaskDTO> getNextNTasks(Integer numberOfTasks) {
+        return this.getAllTasks();
     }
     
 }
