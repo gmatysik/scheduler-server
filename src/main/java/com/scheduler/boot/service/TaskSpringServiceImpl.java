@@ -9,6 +9,7 @@ import com.scheduler.tasks.TaskRepository;
 import com.scheduler.tasks.TaskService;
 import com.scheduler.tasks.TaskDTO;
 import com.scheduler.tasks.TaskServiceFactory;
+import com.scheduler.tasks.TaskValidationException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,8 @@ class TaskSpringServiceImpl implements TaskSpringService{
     }
 
     @Override
-    public TaskDTO addTask(TaskDTO task) {
+    public TaskDTO addTask(TaskDTO task) throws TaskValidationException{
+        
         return taskService.addTask(task);
     }
 
@@ -54,5 +56,10 @@ class TaskSpringServiceImpl implements TaskSpringService{
     @Override
     public List<TaskDTO> getNextNTasks(Integer numberOfTasks) {
         return taskService.getNextNTasks(numberOfTasks);
+    }
+
+    @Override
+    public TaskDTO updateTask(TaskDTO task) throws TaskValidationException{
+        return taskService.updateTask(task);
     }
 }

@@ -6,6 +6,7 @@
 package com.scheduler.boot.service;
 
 import com.scheduler.tasks.TaskDTO;
+import com.scheduler.tasks.TaskValidationException;
 import java.util.List;
 
 /**
@@ -17,7 +18,9 @@ public interface TaskSpringService {
 
     public TaskDTO getTask(Integer taskId);
 
-    public TaskDTO addTask(TaskDTO task);
+    public TaskDTO addTask(TaskDTO task) throws TaskValidationException;
+
+    public TaskDTO updateTask(TaskDTO task) throws TaskValidationException;
 
     public void removeTask(int taskId);
 

@@ -5,8 +5,6 @@
  */
 package com.scheduler.boot.repository;
 
-import com.scheduler.boot.repository.TaskSpringRepository;
-import com.scheduler.boot.repository.TaskTable;
 import com.scheduler.tasks.TaskRepository;
 import com.scheduler.tasks.TaskDTO;
 import java.text.ParseException;
@@ -14,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +24,8 @@ import org.springframework.stereotype.Component;
 @Component
 class TaskRepositoryImpl implements TaskRepository{
        
+    private static final Logger logger = LoggerFactory.getLogger(TaskRepositoryImpl.class);
+    
     @Autowired
     private TaskSpringRepository taskRepository;
 
@@ -51,12 +53,12 @@ class TaskRepositoryImpl implements TaskRepository{
 
     @Override
     public TaskDTO createTask(TaskDTO task) {
-        Date startDate = null;
+        Date startDate;
         try {
-            startDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(task.getStart());
+            startDate = new SimpleDateFormat(TaskDTO.DATE_FORMAT).parse(task.getStart());
         } catch (ParseException ex) {
-            ex.printStackTrace();
-            //Logger.getLogger(TaskService.class.getName()).log(Level.SEVERE, null, ex);
+            startDate = new Date();
+            logger.error(ex.getMessage(), ex);
         }
 
         TaskTable t = new TaskTable(null, task.getTitle(), startDate);                
@@ -66,18 +68,18 @@ class TaskRepositoryImpl implements TaskRepository{
 
     @Override
     public TaskDTO updateTask(TaskDTO task) {
-                 Date deadline = null;
+        Date deadline;
         TaskTable t = taskRepository.findById(task.getId()).get();
         try {
-            deadline = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(task.getStart());
+            deadline = new SimpleDateFormat(TaskDTO.DATE_FORMAT).parse(task.getStart());
         } catch (ParseException ex) {
-            ex.printStackTrace();
-            //Logger.getLogger(TaskService.class.getName()).log(Level.SEVERE, null, ex);
+            deadline = new Date();
+            logger.error(ex.getMessage(), ex);
         }
-         t.setDeadline(deadline);
-         t.setName(task.getTitle());
-         return taskRepository.save(t).getDTOObject();
-    }
+        t.setDeadline(deadline);
+        t.setName(task.getTitle());
+        return taskRepository.save(t).getDTOObject();
+   }
 
     @Override
     public void removeTask(int taskId) {
