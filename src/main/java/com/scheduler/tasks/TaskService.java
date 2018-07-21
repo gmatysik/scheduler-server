@@ -17,9 +17,9 @@ public interface TaskService {
     
     public TaskDTO getTask(int id);
     
-    public TaskDTO addTask(TaskDTO task);
+    public TaskDTO addTask(TaskDTO task) throws TaskValidationException;
 
-    public TaskDTO updateTask(TaskDTO task);
+    public TaskDTO updateTask(TaskDTO task) throws TaskValidationException;
 
     public void removeTask(int taskId);
 

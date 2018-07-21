@@ -5,14 +5,28 @@
  */
 package com.scheduler.tasks;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 /**
  *
  * @author Grzegorz
  */
 public class TaskDTO {
+    
+    //public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
+    
     private int id;
+    
+    @NotEmpty(message = "title.not.empty")
     private String title;
+    
+    @NotEmpty(message = "start.not.empty")
+    @Pattern(message = "start.datetime.format", regexp = "^(\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2})?$")
     private String start;
+    
+    @Pattern(message = "end.datetime.format", regexp = "^(\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2})?$")
     private String end;
 
     public TaskDTO(){

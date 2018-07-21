@@ -5,12 +5,14 @@
  */
 package com.scheduler.tasks;
 
+import com.scheduler.tasks.validation.TaskValidatorImpl;
+
 /**
  *
  * @author Grzegorz
  */
 public class TaskServiceFactory {
     public static TaskService createTaskService(TaskRepository taskRepository){
-        return new TaskServiceImpl(taskRepository);
+        return new TaskServiceImpl(taskRepository, new TaskValidatorImpl());
     }
 }
