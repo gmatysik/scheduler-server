@@ -1,0 +1,5 @@
+/application/scheduler/target/
+/application/admin/target/
+/application/springboot/target/
+/application/notification/target/
+/application/emailnotification/target/
