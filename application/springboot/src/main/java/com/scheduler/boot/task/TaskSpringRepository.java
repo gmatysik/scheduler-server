@@ -16,6 +16,6 @@ import org.springframework.data.repository.query.Param;
 public interface TaskSpringRepository extends CrudRepository<TaskTable, Integer>{
 
     @Query("SELECT t FROM TaskTable t WHERE t.id = :id")
-    public List<TaskTable> findTasksFromNextSevenDaysForUser(@Param("id") long id);
+    public List<TaskTable> findTasksFromNextSevenDaysForUser(@Param("id") int id);
     
 }

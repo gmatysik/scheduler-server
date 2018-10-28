@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.reminder.send.validation;
+package com.scheduler.notification.send.validation;
 
-import com.scheduler.reminder.send.ReminderValidationException;
-import com.scheduler.reminder.send.ReminderValidator;
+import com.scheduler.notification.send.NotificationValidationException;
+import com.scheduler.notification.send.NotificationValidator;
 import com.scheduler.tasks.TaskDTO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,27 +17,27 @@ import java.util.List;
  *
  * @author Grzegorz
  */
-public class ReminderValidatorImpl implements ReminderValidator{
+public class NotificationValidatorImpl implements NotificationValidator{
 
     @Override
-    public void validate(List<TaskDTO> taskList) throws ReminderValidationException {
+    public void validate(List<TaskDTO> taskList) throws NotificationValidationException {
         verifyTasksMaxNDaysInFuture(taskList, 7);
     }
     
-    private void verifyTasksMaxNDaysInFuture(List<TaskDTO> taskList, int daysInFuture) throws ReminderValidationException{
+    private void verifyTasksMaxNDaysInFuture(List<TaskDTO> taskList, int daysInFuture) throws NotificationValidationException{
         for(TaskDTO task : taskList){
             Date startDate;
             try {
                 startDate = new SimpleDateFormat(TaskDTO.DATE_FORMAT).parse(task.getStart());
             } catch (ParseException ex) {
-                throw new ReminderValidationException("Task " + task.getTitle() + " start date invalid: " + task.getStart());
+                throw new NotificationValidationException("Task " + task.getTitle() + " start date invalid: " + task.getStart());
             }
              Date today = new Date();
              
              long diff = startDate.getTime() - today.getTime();
              long difference = diff / (1000 * 60 * 60 * 24);
              if(daysInFuture - difference < 0 || difference < 0){
-                throw new ReminderValidationException("Task " + task.getTitle() + " start date too early/too late: " + task.getStart());                 
+                throw new NotificationValidationException("Task " + task.getTitle() + " start date too early/too late: " + task.getStart());                 
              }
         }
     }    

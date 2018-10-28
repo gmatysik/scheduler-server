@@ -10,8 +10,7 @@ import com.scheduler.tasks.TaskDTO;
 import com.scheduler.tasks.TaskValidationException;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @CrossOrigin
 public class TaskController {
     
+    private final static org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(TaskController.class);
+    
     @Autowired
     private TaskSpringService taskService;
     
@@ -47,7 +48,7 @@ public class TaskController {
    
     @PostMapping(path = "/tasks/task", consumes = "application/json", produces = "application/json")
     public ResponseEntity<TaskDTO> addTask(@RequestBody TaskDTO task){
-        System.out.println("start: " + task.getStart());
+        LOGGER.info("start: " + task.getStart());
         TaskDTO t = null;
         ResponseEntity responseEntity = null;
         try {
@@ -61,7 +62,7 @@ public class TaskController {
 
    @PutMapping(path = "/tasks/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<TaskDTO> updateTask(@RequestBody TaskDTO task){
-        System.out.println("start: " + task.getStart());
+        LOGGER.info("start: " + task.getStart());
         TaskDTO t = null;
         ResponseEntity responseEntity = null;
         try {
@@ -76,7 +77,7 @@ public class TaskController {
     
     @DeleteMapping(path = "/tasks/{taskId}")
     public void removeTask(@PathVariable int taskId ){
-        System.out.println("removeTask");
+        LOGGER.info("removeTask");
         taskService.removeTask(taskId);
     }
 

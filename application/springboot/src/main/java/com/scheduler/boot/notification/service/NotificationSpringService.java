@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.reminder.send;
-
-import com.scheduler.tasks.TaskDTO;
-import java.util.List;
+package com.scheduler.boot.notification.service;
 
 /**
  *
  * @author Grzegorz
  */
-public interface ReminderSender {
-    public void sendTaskNotificationToUser(List<TaskDTO> task, long userId);
-    
+public interface NotificationSpringService {
+    public void sendNotificationsForUser();
 }

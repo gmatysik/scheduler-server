@@ -6,12 +6,16 @@
 package com.scheduler.tasks;
 
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
  * @author Grzegorz
  */
 class TaskImpl implements Task {
+    private final static Logger LOGGER = LogManager.getLogger(TaskImpl.class);
+    
     private final TaskRepository taskRepository;
     private final TaskValidator validator;
     
@@ -32,7 +36,7 @@ class TaskImpl implements Task {
     
     @Override
     public TaskDTO addTask(TaskDTO task) throws TaskValidationException{
-        System.out.println("task: " +   task);
+        LOGGER.info("task: " + task);
         validator.validate(task);
         return taskRepository.createTask(task);
     }
@@ -55,7 +59,7 @@ class TaskImpl implements Task {
 
     @Override
     public List<TaskDTO> getTasksFromNextSevenDaysForUser(long userId) {
-        List<TaskDTO> tasks = taskRepository.findTasksFromNextSevenDaysForUser(userId);
+        List<TaskDTO> tasks = taskRepository.findNextSevenDaysTasksForUser(userId);
         return tasks;
     }
     

@@ -11,10 +11,11 @@
     </parent>
     
     <modules>
+        <module>businessdomain</module>
         <module>scheduler</module>
         <module>admin</module>
         <module>springboot</module>
         <module>notification</module>
-        <module>emailnotification</module>
+        <module>emailnotification</module>        
     </modules>
 </project>

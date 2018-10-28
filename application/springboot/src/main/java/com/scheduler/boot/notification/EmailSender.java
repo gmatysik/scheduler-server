@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.reminder.send;
+package com.scheduler.boot.notification;
 
 /**
  *
  * @author Grzegorz
  */
-public class ReminderValidationException extends Exception{
+public interface EmailSender {
     
-    public ReminderValidationException(String message){
-        super(message);
-    }
+    public void sendMail(String to, String subject, String body);
 }

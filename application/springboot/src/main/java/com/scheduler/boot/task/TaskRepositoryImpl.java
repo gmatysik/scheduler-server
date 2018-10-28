@@ -12,9 +12,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,9 +23,10 @@ import org.springframework.stereotype.Component;
  * @author Grzegorz
  */
 @Component
+@Profile("production")
 class TaskRepositoryImpl implements TaskRepository{
        
-    private static final Logger logger = LoggerFactory.getLogger(TaskRepositoryImpl.class);
+    private final static Logger LOGGER = LogManager.getLogger(TaskRepositoryImpl.class);
     
     @Autowired
     private TaskSpringRepository taskRepository;
@@ -60,7 +62,7 @@ class TaskRepositoryImpl implements TaskRepository{
             }
         } catch (ParseException ex) {
             startDate = new Date();
-            logger.error(ex.getMessage(), ex);
+            LOGGER.error(ex.getMessage(), ex);
         }
 
         Date endDate = null;
@@ -70,7 +72,7 @@ class TaskRepositoryImpl implements TaskRepository{
             }
         } catch (ParseException ex) {
             endDate = new Date();
-            logger.error(ex.getMessage(), ex);
+            LOGGER.error(ex.getMessage(), ex);
         }
         
         TaskTable t = new TaskTable(null, task.getTitle(), startDate, endDate, task.getDescription());
@@ -89,7 +91,7 @@ class TaskRepositoryImpl implements TaskRepository{
             }
         } catch (ParseException ex) {
             startDate = new Date();
-            logger.error(ex.getMessage(), ex);
+            LOGGER.error(ex.getMessage(), ex);
         }
 
         Date endDate = null;
@@ -99,7 +101,7 @@ class TaskRepositoryImpl implements TaskRepository{
             }
         } catch (ParseException ex) {
             endDate = new Date();
-            logger.error(ex.getMessage(), ex);
+            LOGGER.error(ex.getMessage(), ex);
         }
         
         t.setDeadline(startDate);
@@ -115,10 +117,9 @@ class TaskRepositoryImpl implements TaskRepository{
     }
 
     @Override
-    public List<TaskDTO> findTasksFromNextSevenDaysForUser(long userId) {    
-        List<TaskDTO> result = new ArrayList<>();
-        
-        List<TaskTable> source = taskRepository.findTasksFromNextSevenDaysForUser(userId);
+    public List<TaskDTO> findNextSevenDaysTasksForUser(long userId) {    
+        List<TaskDTO> result = new ArrayList<>();        
+        List<TaskTable> source = taskRepository.findTasksFromNextSevenDaysForUser(93);
         source.stream().forEach((task) -> {
             result.add(task.getDTOObject());
         });

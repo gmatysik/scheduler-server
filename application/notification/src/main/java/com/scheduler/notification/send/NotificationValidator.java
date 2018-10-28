@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.reminder.send;
+package com.scheduler.notification.send;
 
 import com.scheduler.tasks.TaskDTO;
+import java.util.List;
 
 /**
  *
  * @author Grzegorz
  */
-public interface Reminder {
-        public void sendTaskNotificationToUser(TaskDTO task, long userId);
-        
-        public void sendNextSevenDaysReminderForUser(long userId) throws ReminderValidationException;
+public interface NotificationValidator {
+        public void validate(List<TaskDTO> task) throws NotificationValidationException;
+
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.reminder.send;
+package com.scheduler.notification.send;
 
 import com.scheduler.tasks.TaskDTO;
 import com.scheduler.tasks.Task;
@@ -13,28 +13,22 @@ import java.util.List;
  *
  * @author Grzegorz
  */
-public class ReminderImpl implements Reminder{
+public class NotificationImpl implements Notification{
 
-    private ReminderSender sender;
+    private NotificationSender sender;
 
     private Task tasks;
     
-    private ReminderValidator validator;
+    private NotificationValidator validator;
 
-    public ReminderImpl(ReminderSender sender, Task tasks, ReminderValidator validator){
+    public NotificationImpl(NotificationSender sender, Task tasks, NotificationValidator validator){
         this.sender = sender;
         this.tasks = tasks;
         this.validator = validator;
     }
     
     @Override
-    public void sendTaskNotificationToUser(TaskDTO task, long userId) {
-        //tasks.getTasksFromNextSevenDaysForUser(user);
-        //sender.sendTaskNotificationToUser(task, user);
-    }
-
-    @Override
-    public void sendNextSevenDaysReminderForUser(long userId) throws ReminderValidationException{
+    public void sendNextSevenDaysReminderForUser(long userId) throws NotificationValidationException{
         List<TaskDTO> taskList = tasks.getTasksFromNextSevenDaysForUser(userId);
         validator.validate(taskList);
         sender.sendTaskNotificationToUser(taskList, userId);

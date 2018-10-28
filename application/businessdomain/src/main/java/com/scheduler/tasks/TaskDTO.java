@@ -37,6 +37,16 @@ public class TaskDTO {
         
     }
     
+    public TaskDTO(TaskDTO taskDTO){
+        this.id = taskDTO.getId();
+        this.start = taskDTO.getStart();
+        this.end = taskDTO.getEnd();
+        this.title = taskDTO.getTitle();
+        this.description = taskDTO.getDescription();
+        this.userId = taskDTO.getUserId();
+    }
+
+    
     public TaskDTO(int id, String title, String start, String end, String description, long userId){
         this.id = id;        
         this.title = title;
@@ -133,5 +143,5 @@ public class TaskDTO {
      */
     public void setUserId(long userId) {
         this.userId = userId;
-    }
+    }    
 }

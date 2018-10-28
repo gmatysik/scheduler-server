@@ -8,13 +8,15 @@ package com.scheduler.boot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EntityScan("com.scheduler.boot.*")
+@ComponentScan("com.scheduler.boot.*")
 public class StringBootRestApplication {
  
      public static void main(String[] args) {
-        SpringApplication.run(StringBootRestApplication.class, args);
-    }
-    
+        SpringApplication springApplication=new SpringApplication(StringBootRestApplication.class);
+        springApplication.run(args);
+    }    
 }

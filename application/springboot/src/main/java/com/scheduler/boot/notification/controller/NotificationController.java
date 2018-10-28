@@ -3,17 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.boot.task.controller;
+package com.scheduler.boot.notification.controller;
 
-import com.scheduler.boot.SendEmail;
-import com.scheduler.boot.task.service.TaskSpringService;
-import com.scheduler.tasks.TaskDTO;
+import com.scheduler.boot.notification.service.NotificationSpringService;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 /**
  *
  * @author Grzegorz
@@ -21,12 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 public class NotificationController {
- 
-    @Autowired
-    private SendEmail sendEmail;
     
-    @RequestMapping(path = "/email", produces = "application/json")
-    public void sendEmail(){
-        sendEmail.sendMail("jomjom@poczta.onet.pl", "test");
+        
+    @Autowired
+    private NotificationSpringService notificationService;
+    
+    @RequestMapping(path = "/remind", produces = "application/json")
+    public void sendNotifications(){
+        notificationService.sendNotificationsForUser();
     }
 }

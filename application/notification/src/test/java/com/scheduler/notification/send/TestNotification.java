@@ -3,9 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.reminder.send;
+package com.scheduler.notification.send;
 
-import com.scheduler.reminder.send.validation.ReminderValidatorImpl;
+import com.scheduler.notification.send.NotificationSender;
+import com.scheduler.notification.send.Notification;
+import com.scheduler.notification.send.NotificationValidationException;
+import com.scheduler.notification.send.NotificationImpl;
+import com.scheduler.notification.send.validation.NotificationValidatorImpl;
 import com.scheduler.tasks.TaskDTO;
 import com.scheduler.tasks.Task;
 import java.text.DateFormat;
@@ -22,11 +26,11 @@ import org.mockito.Mockito;
  *
  * @author Grzegorz
  */
-public class TestReminder {
+public class TestNotification {
     
-    private Reminder reminder;
+    private Notification reminder;
     
-    private ReminderSender sender;
+    private NotificationSender sender;
     
     private Task tasks;
     
@@ -47,21 +51,21 @@ public class TestReminder {
         task.setStart(df.format(calendar.getTime()));
         taskList.add(task);
         
-        sender = Mockito.mock(ReminderSender.class);
+        sender = Mockito.mock(NotificationSender.class);
         tasks = Mockito.mock(Task.class);
         Mockito.when(tasks.getTasksFromNextSevenDaysForUser(user)).thenReturn(taskList);
 
-        reminder = new ReminderImpl(sender, tasks, new ReminderValidatorImpl());
+        reminder = new NotificationImpl(sender, tasks, new NotificationValidatorImpl());
     }
     
     @Test
-    public void testSendNextSevenDaysReminderForUser() throws ReminderValidationException{
+    public void testSendNextSevenDaysReminderForUser() throws NotificationValidationException{
         reminder.sendNextSevenDaysReminderForUser(user);
         Mockito.verify(sender, Mockito.times(1)).sendTaskNotificationToUser(taskList, user);
     }
     
     @Test
-    public void testSendNextSevenDaysReminderForUser_exception() throws ReminderValidationException{
+    public void testSendNextSevenDaysReminderForUser_exception() throws NotificationValidationException{
         DateFormat df = new SimpleDateFormat(TaskDTO.DATE_FORMAT);
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 8);
@@ -71,7 +75,7 @@ public class TestReminder {
         try{
             reminder.sendNextSevenDaysReminderForUser(user);   
             Assert.fail();
-        } catch(ReminderValidationException ex){
+        } catch(NotificationValidationException ex){
             Mockito.verify(sender, Mockito.times(0)).sendTaskNotificationToUser(taskList, user);            
         }
         Mockito.verify(sender, Mockito.times(0)).sendTaskNotificationToUser(taskList, user);

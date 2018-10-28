@@ -15,4 +15,8 @@ public class TaskServiceFactory {
     public static Task createTaskService(TaskRepository taskRepository){
         return new TaskImpl(taskRepository, new TaskValidatorImpl());
     }
+    
+    public static Task createTaskService(){
+        return new TaskImpl(new DefaultTaskRepositoryImpl(), new TaskValidatorImpl());
+    }    
 }

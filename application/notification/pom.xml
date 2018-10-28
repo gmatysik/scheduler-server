@@ -10,7 +10,12 @@
         <version>0.1</version>
     </parent>
 
-    <dependencies>
+     <dependencies>
+        <dependency>
+            <groupId>com.scheduler</groupId>
+            <artifactId>businessdomain</artifactId>
+            <version>${project.version}</version>        
+        </dependency>
         <dependency>
             <groupId>com.scheduler</groupId>
             <artifactId>scheduler</artifactId>
