@@ -5,21 +5,17 @@
  */
 package com.scheduler.boot.notification;
 
+import com.scheduler.notification.send.formatter.TaskViewFormatter;
 import com.scheduler.tasks.TaskDTO;
 
 /**
  *
  * @author Grzegorz
  */
-public class NotificationFormatter {
-    private final TaskDTO task;
-    
-    public NotificationFormatter(TaskDTO task){
-        this.task = task;
-    }
+public class TaskNotificationFormatterImpl implements TaskViewFormatter{
     
     @Override
-    public String toString(){
+    public String format(TaskDTO task){
         String title = task.getTitle() != null ? task.getTitle() : "";
         String description = task.getDescription() != null ? task.getDescription() : "";
         String start = task.getStart()!= null ? task.getStart(): "";

@@ -5,18 +5,20 @@
  */
 package com.scheduler.tasks;
 
+import com.scheduler.tasks.repository.DefaultTaskRepositoryImpl;
+import com.scheduler.tasks.repository.TaskRepository;
 import com.scheduler.tasks.validation.TaskValidatorImpl;
 
 /**
  *
  * @author Grzegorz
  */
-public class TaskServiceFactory {
-    public static Task createTaskService(TaskRepository taskRepository){
+public class TaskFactory {
+    public static Task createTask(TaskRepository taskRepository){
         return new TaskImpl(taskRepository, new TaskValidatorImpl());
     }
     
-    public static Task createTaskService(){
+    public static Task createTask(){
         return new TaskImpl(new DefaultTaskRepositoryImpl(), new TaskValidatorImpl());
     }    
 }

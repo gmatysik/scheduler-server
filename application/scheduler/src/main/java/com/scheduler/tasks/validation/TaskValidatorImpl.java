@@ -6,8 +6,6 @@
 package com.scheduler.tasks.validation;
 
 import com.scheduler.tasks.TaskDTO;
-import com.scheduler.tasks.TaskValidationException;
-import com.scheduler.tasks.TaskValidator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

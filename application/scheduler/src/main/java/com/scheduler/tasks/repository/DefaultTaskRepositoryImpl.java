@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.tasks;
+package com.scheduler.tasks.repository;
 
+import com.scheduler.tasks.TaskDTO;
+import com.scheduler.tasks.repository.TaskRepository;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

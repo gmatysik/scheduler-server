@@ -3,29 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.notification.send;
+package com.scheduler.notification;
 
+import com.scheduler.notification.send.NotificationSender;
+import com.scheduler.notification.send.validation.NotificationValidationException;
+import com.scheduler.notification.send.validation.NotificationValidator;
 import com.scheduler.tasks.TaskDTO;
 import com.scheduler.tasks.Task;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Grzegorz
  */
-public class NotificationImpl implements Notification{
+class NotificationImpl implements Notification{
 
-    private NotificationSender sender;
+    private final NotificationSender sender;
 
-    private Task tasks;
+    private final Task tasks;
     
-    private NotificationValidator validator;
+    private final NotificationValidator validator;
 
     public NotificationImpl(NotificationSender sender, Task tasks, NotificationValidator validator){
         this.sender = sender;

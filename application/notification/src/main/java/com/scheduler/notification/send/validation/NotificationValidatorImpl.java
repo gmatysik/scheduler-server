@@ -5,8 +5,6 @@
  */
 package com.scheduler.notification.send.validation;
 
-import com.scheduler.notification.send.NotificationValidationException;
-import com.scheduler.notification.send.NotificationValidator;
 import com.scheduler.tasks.Task;
 import com.scheduler.tasks.TaskDTO;
 import java.text.ParseException;

@@ -5,6 +5,9 @@
  */
 package com.scheduler.tasks;
 
+import com.scheduler.tasks.repository.TaskRepository;
+import com.scheduler.tasks.validation.TaskValidationException;
+import com.scheduler.tasks.validation.TaskValidator;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;

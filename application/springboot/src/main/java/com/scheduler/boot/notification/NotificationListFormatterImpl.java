@@ -5,28 +5,29 @@
  */
 package com.scheduler.boot.notification;
 
+import com.scheduler.notification.send.formatter.TaskListViewFormatter;
+import com.scheduler.notification.send.formatter.TaskViewFormatter;
 import com.scheduler.tasks.Task;
 import com.scheduler.tasks.TaskDTO;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * TODO: move to notification project
  * @author Grzegorz
  */
-public class FormattedNotificationList {
-    private final List<TaskDTO> tasks;
-    
-    public FormattedNotificationList(List<TaskDTO> tasks){
-        this.tasks = tasks;
+public class NotificationListFormatterImpl extends TaskListViewFormatter{
+
+    public NotificationListFormatterImpl(TaskViewFormatter notificationFormatter) {
+        super(notificationFormatter);
     }
-    
-    public String getNotifications(){
+ 
+    @Override
+    public String format(List<TaskDTO> tasks){
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("Task list for the next %s days\n\n", Task.DAYS_TO_FIND_TASKS));
         
         tasks.stream().forEach((task) -> {
-            sb.append(new NotificationFormatter(task));
+            sb.append(notificationFormatter.format(task));
             sb.append("\n\n");
         });
  

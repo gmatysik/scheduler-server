@@ -5,6 +5,7 @@
  */
 package com.scheduler.tasks;
 
+import com.scheduler.tasks.validation.TaskValidationException;
 import java.util.List;
 
 /**

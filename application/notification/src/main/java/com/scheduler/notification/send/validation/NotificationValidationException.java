@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.tasks;
+package com.scheduler.notification.send.validation;
 
 /**
  *
  * @author Grzegorz
  */
-public interface TaskValidator {
-    public void validate(TaskDTO task) throws TaskValidationException;
+public class NotificationValidationException extends Exception{
+    
+    public NotificationValidationException(String message){
+        super(message);
+    }
 }

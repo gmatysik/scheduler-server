@@ -5,7 +5,7 @@
  */
 package com.scheduler.boot.task;
 
-import com.scheduler.tasks.DefaultTaskRepositoryImpl;
+import com.scheduler.tasks.repository.DefaultTaskRepositoryImpl;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 

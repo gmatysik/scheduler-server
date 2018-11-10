@@ -5,11 +5,9 @@
  */
 package com.scheduler.notification.send;
 
-import com.scheduler.notification.send.NotificationSender;
-import com.scheduler.notification.send.Notification;
-import com.scheduler.notification.send.NotificationValidationException;
-import com.scheduler.notification.send.NotificationImpl;
-import com.scheduler.notification.send.validation.NotificationValidatorImpl;
+import com.scheduler.notification.NotificationFactory;
+import com.scheduler.notification.Notification;
+import com.scheduler.notification.send.validation.NotificationValidationException;
 import com.scheduler.tasks.TaskDTO;
 import com.scheduler.tasks.Task;
 import java.text.DateFormat;
@@ -52,10 +50,11 @@ public class TestNotification {
         taskList.add(task);
         
         sender = Mockito.mock(NotificationSender.class);
+        Mockito.doNothing().when(sender).sendTaskNotificationToUser(Mockito.anyList(), Mockito.eq(0L));
         tasks = Mockito.mock(Task.class);
         Mockito.when(tasks.getTasksFromNextSevenDaysForUser(user)).thenReturn(taskList);
 
-        reminder = new NotificationImpl(sender, tasks, new NotificationValidatorImpl());
+        reminder = NotificationFactory.createNotification(sender, tasks);                
     }
     
     @Test
@@ -76,8 +75,8 @@ public class TestNotification {
             reminder.sendNextSevenDaysReminderForUser(user);   
             Assert.fail();
         } catch(NotificationValidationException ex){
-            Mockito.verify(sender, Mockito.times(0)).sendTaskNotificationToUser(taskList, user);            
+            Assert.assertTrue(ex.getMessage().contains("Task Task 1 start date too early/too late"));
         }
-        Mockito.verify(sender, Mockito.times(0)).sendTaskNotificationToUser(taskList, user);
+      Mockito.verify(sender, Mockito.times(0)).sendTaskNotificationToUser(taskList, user);
     }    
 }

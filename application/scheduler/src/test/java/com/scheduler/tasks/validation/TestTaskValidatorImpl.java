@@ -6,8 +6,6 @@
 package com.scheduler.tasks.validation;
 
 import com.scheduler.tasks.TaskDTO;
-import com.scheduler.tasks.TaskValidationException;
-import com.scheduler.tasks.TaskValidator;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import static org.junit.Assert.assertTrue;

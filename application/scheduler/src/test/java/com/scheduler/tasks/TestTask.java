@@ -5,6 +5,9 @@
  */
 package com.scheduler.tasks;
 
+import com.scheduler.tasks.repository.DefaultTaskRepositoryImpl;
+import com.scheduler.tasks.repository.TaskRepository;
+import com.scheduler.tasks.validation.TaskValidationException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,7 +35,7 @@ public class TestTask {
     @Before
     public void setUp(){
         taskRepository = new DefaultTaskRepositoryImpl();
-        task = TaskServiceFactory.createTaskService(taskRepository);
+        task = TaskFactory.createTask(taskRepository);
         initializeTestData();
     }
 

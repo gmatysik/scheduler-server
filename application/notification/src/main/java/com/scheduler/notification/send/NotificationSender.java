@@ -5,6 +5,7 @@
  */
 package com.scheduler.notification.send;
 
+import com.scheduler.notification.send.formatter.TaskListViewFormatter;
 import com.scheduler.tasks.TaskDTO;
 import java.util.List;
 
@@ -12,7 +13,21 @@ import java.util.List;
  *
  * @author Grzegorz
  */
-public interface NotificationSender {
-    public void sendTaskNotificationToUser(List<TaskDTO> task, long userId);
+public abstract class NotificationSender {
+ 
+    private final TaskListViewFormatter notificationListFormatter;
     
+    public NotificationSender(TaskListViewFormatter notificationListFormatter){
+        this.notificationListFormatter = notificationListFormatter;
+    }
+    
+    private String formatNotificationList(List<TaskDTO> task){
+        return notificationListFormatter.format(task);
+    }
+    
+    public void sendTaskNotificationToUser(List<TaskDTO> task, long userId){
+        sendTaskNotification(formatNotificationList(task));
+    }
+    
+    public abstract void sendTaskNotification(String fomattedNotification);    
 }

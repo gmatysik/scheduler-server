@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.tasks;
+package com.scheduler.tasks.repository;
 
+import com.scheduler.tasks.TaskDTO;
 import java.util.List;
 
 /**

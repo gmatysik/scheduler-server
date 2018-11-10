@@ -5,11 +5,11 @@
  */
 package com.scheduler.boot.task.service;
 
-import com.scheduler.tasks.TaskRepository;
+import com.scheduler.tasks.repository.TaskRepository;
 import com.scheduler.tasks.Task;
 import com.scheduler.tasks.TaskDTO;
-import com.scheduler.tasks.TaskServiceFactory;
-import com.scheduler.tasks.TaskValidationException;
+import com.scheduler.tasks.TaskFactory;
+import com.scheduler.tasks.validation.TaskValidationException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ class TaskSpringServiceImpl implements TaskSpringService{
 
     @PostConstruct
     public void init() {
-        task = TaskServiceFactory.createTaskService(taskRepository);
+        task = TaskFactory.createTask(taskRepository);
     }
     
     @Override

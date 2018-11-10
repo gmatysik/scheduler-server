@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.notification.send;
+package com.scheduler.notification.send.formatter;
+
+import com.scheduler.tasks.TaskDTO;
 
 /**
  *
  * @author Grzegorz
  */
-public class NotificationValidationException extends Exception{
+public interface TaskViewFormatter {
     
-    public NotificationValidationException(String message){
-        super(message);
-    }
+    public String format(TaskDTO task);
 }

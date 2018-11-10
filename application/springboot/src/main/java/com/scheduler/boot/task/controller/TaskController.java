@@ -7,7 +7,7 @@ package com.scheduler.boot.task.controller;
 
 import com.scheduler.boot.task.service.TaskSpringService;
 import com.scheduler.tasks.TaskDTO;
-import com.scheduler.tasks.TaskValidationException;
+import com.scheduler.tasks.validation.TaskValidationException;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.notification.send;
+package com.scheduler.notification.send.validation;
 
 import com.scheduler.tasks.TaskDTO;
 import java.util.List;

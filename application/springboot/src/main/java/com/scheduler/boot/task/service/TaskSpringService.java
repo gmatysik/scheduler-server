@@ -6,7 +6,7 @@
 package com.scheduler.boot.task.service;
 
 import com.scheduler.tasks.TaskDTO;
-import com.scheduler.tasks.TaskValidationException;
+import com.scheduler.tasks.validation.TaskValidationException;
 import java.util.List;
 
 /**

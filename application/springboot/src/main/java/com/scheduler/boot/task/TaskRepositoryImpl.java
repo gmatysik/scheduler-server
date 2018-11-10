@@ -6,7 +6,7 @@
 package com.scheduler.boot.task;
 
 import com.scheduler.tasks.Task;
-import com.scheduler.tasks.TaskRepository;
+import com.scheduler.tasks.repository.TaskRepository;
 import com.scheduler.tasks.TaskDTO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
