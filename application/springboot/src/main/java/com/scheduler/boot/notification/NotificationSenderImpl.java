@@ -7,7 +7,13 @@ package com.scheduler.boot.notification;
 
 import com.scheduler.notification.send.NotificationSender;
 import com.scheduler.tasks.TaskDTO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,10 +28,9 @@ public class NotificationSenderImpl implements NotificationSender{
     private EmailSender sendEmail;
     
     @Override
-    public void sendTaskNotificationToUser(List<TaskDTO> tasks, long userId) { 
-        tasks.stream().forEach((task) -> {
-            sendEmail.sendMail("jomjom@poczta.onet.pl", task.getTitle(), task.getDescription());
-        });
+    public void sendTaskNotificationToUser(List<TaskDTO> tasks, long userId) {
+        FormattedNotificationList formattedNotificationList = new FormattedNotificationList(tasks);                
+        sendEmail.sendMail("jomjom@poczta.onet.pl", "Tasks list", formattedNotificationList.getNotifications());
     }
-    
+        
 }

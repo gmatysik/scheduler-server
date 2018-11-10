@@ -5,12 +5,14 @@
  */
 package com.scheduler.tasks;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.Date;
 
 /**
  *
@@ -23,6 +25,7 @@ public class TestTask {
     private TaskDTO taskDTO2;
     private TaskDTO taskDTO3;
     private TaskDTO taskDTO4;
+    private TaskDTO taskDTO5;
     
     private TaskRepository taskRepository;
     
@@ -51,17 +54,23 @@ public class TestTask {
         cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, -1);
         String startDateMinus1 = dt.format(cal.getTime());
-       
+
+        cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, 4);
+        String startDatePlus4 = dt.format(cal.getTime());
+        
         taskDTO1 = createTask(startDate, null, "Title 1", "Description 1" );
-        taskDTO2 = createTask(startDatePlus1, null, "Title 2", "Description 2" );
-        taskDTO3 = createTask(startDatePlus8, null, "Title 3", "Description 3" );
+        taskDTO2 = createTask(startDatePlus8, null, "Title 2", "Description 2" );
+        taskDTO3 = createTask(startDatePlus4, null, "Title 3", "Description 3" );
         taskDTO4 = createTask(startDateMinus1, null, "Title 4", "Description 4" );
-       
+        taskDTO5 = createTask(startDatePlus1, null, "Title 5", "Description 5" );
+        
         try {
             task.addTask(taskDTO1);
             task.addTask(taskDTO2);
             task.addTask(taskDTO3);
             task.addTask(taskDTO4);
+            task.addTask(taskDTO5);
         } catch (TaskValidationException ex) {
             fail("");
         }
@@ -97,10 +106,10 @@ public class TestTask {
         } catch(TaskValidationException e){
             fail("Should not have been thrown");
         }
-        assertEquals(4, taskDTO.getId());
+        assertEquals(5, taskDTO.getId());
         
-        TaskDTO addedTask = task.getTask(4);
-        assertEquals(4, addedTask.getId());
+        TaskDTO addedTask = task.getTask(5);
+        assertEquals(5, addedTask.getId());
         assertEquals(startDate, addedTask.getStart());
         assertEquals(endDate, addedTask.getEnd());
         assertEquals(title, addedTask.getTitle());
@@ -200,20 +209,31 @@ public class TestTask {
     
     @Test
     public void testGetAllTasks(){        
-        List<TaskDTO> taskList = taskRepository.getAll();
-        assertEquals(4, taskList.size());
+        List<TaskDTO> taskList = task.getAllTasks();
+        assertEquals(5, taskList.size());
     }
 
     @Test
-    public void testFindNextSevenDaysTasksForUser(){        
-        List<TaskDTO> taskList = taskRepository.findNextSevenDaysTasksForUser(0);
-        assertEquals(2, taskList.size());
+    public void testFindNextSevenDaysTasksForUser() throws ParseException{
+        SimpleDateFormat dateFormat = new SimpleDateFormat(TaskDTO.DATE_FORMAT);
+
+        List<TaskDTO> taskList = task.getTasksFromNextSevenDaysForUser(0);
+        assertEquals(4, taskList.size());
+        
+        Date date1 = dateFormat.parse(taskList.get(0).getStart());
+        Date date2 = dateFormat.parse(taskList.get(1).getStart());
+        Date date3 = dateFormat.parse(taskList.get(2).getStart());
+        Date date4 = dateFormat.parse(taskList.get(3).getStart());
+                
+        assertTrue(date1.before(date2));
+        assertTrue(date2.before(date3));
+        assertTrue(date3.before(date4));
     }
     
     @Test
     public void testRemoveTask(){        
         taskRepository.removeTask(1);
-        assertEquals(3, taskRepository.getAll().size());
+        assertEquals(4, taskRepository.getAll().size());
     }
 
     @Test

@@ -7,7 +7,13 @@ package com.scheduler.notification.send;
 
 import com.scheduler.tasks.TaskDTO;
 import com.scheduler.tasks.Task;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,5 +39,6 @@ public class NotificationImpl implements Notification{
         validator.validate(taskList);
         sender.sendTaskNotificationToUser(taskList, userId);
     }
+
 
 }

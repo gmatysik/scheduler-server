@@ -63,12 +63,12 @@ public class DefaultTaskRepositoryImpl implements TaskRepository{
     }
 
     @Override
-    public List<TaskDTO> findNextSevenDaysTasksForUser(long userId) {
+    public List<TaskDTO> findNextTasksForUserForNextNDays(long userId, int days) {
         SimpleDateFormat dt = new SimpleDateFormat(TaskDTO.DATE_FORMAT);
 
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, 7);
-        Date in7Days = cal.getTime();
+        cal.add(Calendar.DAY_OF_MONTH, days);
+        Date inNDays = cal.getTime();
         Date now = new Date();
 
         return taskList.stream().filter(element -> {
@@ -79,7 +79,7 @@ public class DefaultTaskRepositoryImpl implements TaskRepository{
                     LOGGER.error("Parse exception: ", ex);
                 }
                 if(date != null){
-                    return date.before(in7Days) && date.after(now);
+                    return date.before(inNDays) && date.after(now);
                 }                
                 return false;
             }).collect(Collectors.toList());

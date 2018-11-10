@@ -7,6 +7,7 @@ package com.scheduler.notification.send.validation;
 
 import com.scheduler.notification.send.NotificationValidationException;
 import com.scheduler.notification.send.NotificationValidator;
+import com.scheduler.tasks.Task;
 import com.scheduler.tasks.TaskDTO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,10 +19,9 @@ import java.util.List;
  * @author Grzegorz
  */
 public class NotificationValidatorImpl implements NotificationValidator{
-
     @Override
     public void validate(List<TaskDTO> taskList) throws NotificationValidationException {
-        verifyTasksMaxNDaysInFuture(taskList, 7);
+        verifyTasksMaxNDaysInFuture(taskList, Task.DAYS_TO_FIND_TASKS);
     }
     
     private void verifyTasksMaxNDaysInFuture(List<TaskDTO> taskList, int daysInFuture) throws NotificationValidationException{

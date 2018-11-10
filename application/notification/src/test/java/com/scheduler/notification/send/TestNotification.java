@@ -68,7 +68,7 @@ public class TestNotification {
     public void testSendNextSevenDaysReminderForUser_exception() throws NotificationValidationException{
         DateFormat df = new SimpleDateFormat(TaskDTO.DATE_FORMAT);
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 8);
+        calendar.add(Calendar.DATE, Task.DAYS_TO_FIND_TASKS + 1);
         calendar.add(Calendar.MINUTE, 1);
         
         taskList.get(0).setStart(df.format(calendar.getTime()));

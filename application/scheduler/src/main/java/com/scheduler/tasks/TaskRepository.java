@@ -23,6 +23,6 @@ public interface TaskRepository {
 
     public void removeTask(int taskId);
 
-    public List<TaskDTO> findNextSevenDaysTasksForUser(long userId);
+    public List<TaskDTO> findNextTasksForUserForNextNDays(long userId, int days);
 
 }

@@ -5,11 +5,13 @@
  */
 package com.scheduler.boot.task;
 
+import com.scheduler.tasks.Task;
 import com.scheduler.tasks.TaskRepository;
 import com.scheduler.tasks.TaskDTO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -117,9 +119,13 @@ class TaskRepositoryImpl implements TaskRepository{
     }
 
     @Override
-    public List<TaskDTO> findNextSevenDaysTasksForUser(long userId) {    
-        List<TaskDTO> result = new ArrayList<>();        
-        List<TaskTable> source = taskRepository.findTasksFromNextSevenDaysForUser(93);
+    public List<TaskDTO> findNextTasksForUserForNextNDays(long userId, int days) {    
+        List<TaskDTO> result = new ArrayList<>();
+        Date from = Calendar.getInstance().getTime();
+        Calendar calendarTo = Calendar.getInstance();
+        calendarTo.add(Calendar.DATE, Task.DAYS_TO_FIND_TASKS);
+
+        List<TaskTable> source = taskRepository.findTasksInDateRange(from, calendarTo.getTime());
         source.stream().forEach((task) -> {
             result.add(task.getDTOObject());
         });

@@ -26,6 +26,7 @@ public class SendEmail implements EmailSender{
     @Autowired
     private JavaMailSender mailSender;
     
+    @Override
     public void sendMail(String to, String subject, String body) {
 
         LOGGER.info("Sending email...");

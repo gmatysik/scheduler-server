@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface Task {
 
+    public static int DAYS_TO_FIND_TASKS = 14;
+    
     public List<TaskDTO> getAllTasks();
     
     public TaskDTO getTask(int id);
