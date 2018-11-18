@@ -18,7 +18,6 @@ public class LoginController {
     
     @RequestMapping("/login")
 	public boolean login() {
-            System.out.println("login");
 		return true;//user.getUserName().equals("user") && user.getPassword().equals("password");
     }
         
