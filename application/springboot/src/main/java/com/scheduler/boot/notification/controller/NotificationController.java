@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Grzegorz
  */
 @RestController
-@CrossOrigin
+//@CrossOrigin
 public class NotificationController {
     
         

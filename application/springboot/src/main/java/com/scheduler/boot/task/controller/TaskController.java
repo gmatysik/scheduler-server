@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Grzegorz
  */
 @RestController
-@CrossOrigin
 public class TaskController {
     
     private final static org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(TaskController.class);
@@ -40,7 +39,7 @@ public class TaskController {
         return taskService.getTask(new Integer(taskId));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://www.google.pl:2000")
     @RequestMapping(path = "/tasks", produces = "application/json")
     public List<TaskDTO> getTasks(){
         return taskService.getAllTasks();
