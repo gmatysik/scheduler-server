@@ -5,8 +5,14 @@
  */
 package com.scheduler.boot.notification.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,9 +22,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
     
-    @RequestMapping("/login")
-	public boolean login() {
-		return true;//user.getUserName().equals("user") && user.getPassword().equals("password");
+    @Autowired
+    private UserDetailsService userDetailService;
+    
+    @RequestMapping( path = "/login", method = RequestMethod.POST)
+    public boolean login(@RequestBody User user) {        
+        //TODO: catch usernme not found
+        UserDetails details = userDetailService.loadUserByUsername(user.getUser());
+        if(details == null){
+            return false;
+        }
+        
+        return new BCryptPasswordEncoder().matches(user.getPassword(), details.getPassword().replace("{bcrypt}", ""));
     }
         
 }

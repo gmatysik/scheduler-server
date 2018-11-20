@@ -5,13 +5,17 @@
  */
 package com.scheduler.boot.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.session.SessionManagementFilter;
 
 /**
@@ -22,14 +26,41 @@ import org.springframework.security.web.session.SessionManagementFilter;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
+    @Autowired
+    UserDetailsService userDetailsService;
+    
     @Bean
-    MyCorsFilter corsFilter() {
-        
+    MyCorsFilter corsFilter() {        
         MyCorsFilter filter = new MyCorsFilter();
-        return filter;
-        
+        return filter;        
     }
     
+    
+/*    @Bean
+    public UserDetailsService createUserDetailsService() {
+        return new UserDetailsServiceImpl();
+    }
+  */  
+    /*
+ @Override
+  public void configure(AuthenticationManagerBuilder builder)
+          throws Exception {
+      builder.userDetailsService(userDetailsService);
+  }
+    */
+    
+    @Bean
+    @Override
+    public UserDetailsService userDetailsService() {
+        UserDetails user =
+             User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("password")
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(user);
+    }
     
     @Override
     protected void configure(HttpSecurity http) 
@@ -49,7 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         
     }
     
-    
+    /*
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
       throws Exception {
@@ -59,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .password("{noop}password")
           //  .password("password")
           .roles("USER");
-    }
+    }*/
     /*
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
