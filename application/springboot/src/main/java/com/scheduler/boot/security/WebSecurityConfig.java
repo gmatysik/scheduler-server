@@ -70,11 +70,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(corsFilter(), SessionManagementFilter.class)//adds cors filter!!!
             .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/login*").permitAll()  
+                //.antMatchers("/login*").permitAll()  
                 .antMatchers(HttpMethod.OPTIONS,"/tasks").permitAll()
                  .antMatchers(HttpMethod.OPTIONS,"/tasks/task").permitAll()
                 .anyRequest()
                 .authenticated()
+                //.and().formLogin().loginPage("/dupa")
                 .and()
                 .httpBasic();
         

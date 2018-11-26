@@ -28,12 +28,13 @@ public class LoginController {
     @RequestMapping( path = "/login", method = RequestMethod.POST)
     public boolean login(@RequestBody User user) {        
         //TODO: catch usernme not found
-        UserDetails details = userDetailService.loadUserByUsername(user.getUser());
+        /*UserDetails details = userDetailService.loadUserByUsername(user.getUser());
         if(details == null){
             return false;
         }
         
-        return new BCryptPasswordEncoder().matches(user.getPassword(), details.getPassword().replace("{bcrypt}", ""));
+        return new BCryptPasswordEncoder().matches(user.getPassword(), details.getPassword().replace("{bcrypt}", ""));*/
+        return false;
     }
         
 }
