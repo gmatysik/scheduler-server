@@ -10,13 +10,13 @@
         <version>0.1</version>
     </parent>
     
-    <modules>
-        <module>businessdomain</module>
-        <module>scheduler</module>
-        <module>admin</module>
-        <module>springboot</module>
-        <module>notification</module>
-        <module>emailnotification</module>
-        <module>security</module>
-    </modules>
+	<modules>
+		<module>businessdomain</module>
+		<module>scheduler</module>
+		<module>admin</module>
+		<module>springboot</module>
+		<module>notification</module>
+		<module>emailnotification</module>
+	</modules>
+
 </project>

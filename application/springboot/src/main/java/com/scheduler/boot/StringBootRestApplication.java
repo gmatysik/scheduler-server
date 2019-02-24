@@ -31,6 +31,9 @@ public class StringBootRestApplication extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
+                .authorizeRequests()
+                .antMatchers("/status").permitAll()
+                .and()
                 .antMatcher("/*")
                 .authorizeRequests().anyRequest().authenticated();
     }
