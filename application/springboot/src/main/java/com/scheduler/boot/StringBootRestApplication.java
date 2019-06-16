@@ -18,11 +18,11 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @SpringBootApplication
 @EntityScan("com.scheduler.boot.*")
 @ComponentScan("com.scheduler.boot.*")
-@EnableResourceServer
-public class StringBootRestApplication extends ResourceServerConfigurerAdapter {
+//@EnableResourceServer
+public class StringBootRestApplication {//extends ResourceServerConfigurerAdapter {
 
-    private static final String RESOURCE_ID = "messages-resource";
-
+//    private static final String RESOURCE_ID = "messages-resource";
+/*
     @Override
     public void configure(ResourceServerSecurityConfigurer security) throws Exception {
         security.resourceId(RESOURCE_ID).stateless(false);
@@ -36,7 +36,7 @@ public class StringBootRestApplication extends ResourceServerConfigurerAdapter {
                 .and()
                 .antMatcher("/*")
                 .authorizeRequests().anyRequest().authenticated();
-    }
+    }*/
 
     public static void main(String[] args) {
         SpringApplication springApplication=new SpringApplication(StringBootRestApplication.class);

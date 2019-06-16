@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @author Grzegorz
  */
 @Component
-@Profile("development")
+@Profile({"development", "development_email"})
 public class DefaultRepository extends DefaultTaskRepositoryImpl{
     
 }

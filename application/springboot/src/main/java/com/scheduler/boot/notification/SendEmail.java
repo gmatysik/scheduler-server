@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  * @author Grzegorz
  */
 @Service
-@Profile("production")
+@Profile({"production","development_email"})
 public class SendEmail implements EmailSender{
     
     private final static Logger LOGGER = LogManager.getLogger(SendEmail.class);
