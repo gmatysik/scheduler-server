@@ -1,0 +1,1 @@
+java -jar -Dspring.profiles.active=development application/springboot/target/springboot-0.1.jar 
