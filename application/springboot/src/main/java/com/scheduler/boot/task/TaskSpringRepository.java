@@ -14,7 +14,7 @@ import org.springframework.data.repository.query.Param;
  *
  * @author Grzegorz
  */
-public interface TaskSpringRepository extends CrudRepository<TaskTable, Integer>{
+public interface TaskSpringRepository extends CrudRepository<TaskTable, Long>{
 
     @Query("SELECT t FROM TaskTable t WHERE t.deadline >= :from AND t.deadline <= :to")
     public List<TaskTable> findTasksInDateRange(@Param("from") Date date, @Param("to") Date to);

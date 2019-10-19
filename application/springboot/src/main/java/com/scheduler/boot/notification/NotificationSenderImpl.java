@@ -6,37 +6,29 @@
 package com.scheduler.boot.notification;
 
 import com.scheduler.notification.send.NotificationSender;
-import com.scheduler.notification.send.formatter.TaskListViewFormatter;
-import com.scheduler.notification.send.formatter.TaskViewFormatter;
-import com.scheduler.tasks.TaskDTO;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.scheduler.users.User;
+import com.scheduler.users.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- *
  * @author Grzegorz
  */
 @Component
-public class NotificationSenderImpl extends NotificationSender{
-    
-    @Autowired
+public class NotificationSenderImpl extends NotificationSender {
+
     private EmailSender sendEmail;
 
-    public NotificationSenderImpl() {
-        super(new NotificationListFormatterImpl(new TaskNotificationFormatterImpl()));
+    @Autowired
+    public NotificationSenderImpl(User user, EmailSender sendEmail) {
+        super(new NotificationListFormatterImpl(new TaskNotificationFormatterImpl()), user);
+        this.sendEmail = sendEmail;
     }
-    
+
     @Override
-    public void sendTaskNotification(String fomattedNotification) {
-        sendEmail.sendMail("jomjom@poczta.onet.pl", "Tasks list", fomattedNotification);    
+    public void sendTaskNotification(String fomattedNotification, UserDTO userDTO) {
+        sendEmail.sendMail("jomjom@poczta.onet.pl", "Tasks list", fomattedNotification);
     }
-    
-        
+
+
 }

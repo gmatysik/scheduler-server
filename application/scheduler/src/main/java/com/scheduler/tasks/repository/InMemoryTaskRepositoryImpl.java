@@ -6,7 +6,7 @@
 package com.scheduler.tasks.repository;
 
 import com.scheduler.tasks.TaskDTO;
-import com.scheduler.tasks.repository.TaskRepository;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,30 +23,32 @@ import org.apache.logging.log4j.LogManager;
  * 
  * @author Grzegorz
  */
-public class DefaultTaskRepositoryImpl implements TaskRepository{
+public class InMemoryTaskRepositoryImpl implements TaskRepository{
 
-    private final static Logger LOGGER = LogManager.getLogger(DefaultTaskRepositoryImpl.class);
+    private final static Logger LOGGER = LogManager.getLogger(InMemoryTaskRepositoryImpl.class);
     
-    private int id = 0;
+    private long id = 0;
     
     private final List<TaskDTO> taskList = new ArrayList<>();
-    
+
     @Override
     public List<TaskDTO> getAll() {
-        return taskList;
+        List<TaskDTO> list = new ArrayList<>();
+        list.addAll(taskList);
+        return list;
     }
 
     @Override
-    public TaskDTO getTask(int id) {
+    public TaskDTO getTask(long id) {
         TaskDTO taskDTO = taskList.stream().filter(element -> element.getId() == id).findFirst().get();
-        return new TaskDTO(taskDTO); 
+        return taskDTO != null ? new TaskDTO(taskDTO) : null;
     }
 
     @Override
     public TaskDTO createTask(TaskDTO task) {
         task.setId(id++);
         taskList.add(task);
-        return task;
+        return new TaskDTO(task);
     }
 
     @Override
@@ -60,7 +62,7 @@ public class DefaultTaskRepositoryImpl implements TaskRepository{
     }
 
     @Override
-    public void removeTask(int taskId) {
+    public void removeTask(long taskId) {
         taskList.removeIf(element -> element.getId() == taskId);
     }
 
@@ -74,6 +76,9 @@ public class DefaultTaskRepositoryImpl implements TaskRepository{
         Date now = new Date();
 
         return taskList.stream().filter(element -> {
+                if(element.getUserId() != userId){
+                    return false;
+                }
                 Date date = null;
                 try {
                     date = dt.parse(element.getStart());

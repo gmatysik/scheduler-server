@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.scheduler.notification.send;
+package com.scheduler.notification;
 
-import com.scheduler.notification.NotificationFactory;
-import com.scheduler.notification.Notification;
+import com.scheduler.notification.send.NotificationSender;
 import com.scheduler.notification.send.validation.NotificationValidationException;
 import com.scheduler.tasks.TaskDTO;
 import com.scheduler.tasks.Task;
@@ -15,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import com.scheduler.users.UserDTO;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,11 +35,12 @@ public class TestNotification {
     
     private List<TaskDTO> taskList = new ArrayList<>();
     
-    private long user;
+    private UserDTO user;
     
     @Before
     public void setUp(){
-        user = 0;
+        user = new UserDTO();
+        user.setId(0);
         
         TaskDTO task = new TaskDTO();
         task.setTitle("Task 1");
@@ -52,7 +54,7 @@ public class TestNotification {
         sender = Mockito.mock(NotificationSender.class);
         Mockito.doNothing().when(sender).sendTaskNotificationToUser(Mockito.anyList(), Mockito.eq(0L));
         tasks = Mockito.mock(Task.class);
-        Mockito.when(tasks.getTasksFromNextSevenDaysForUser(user)).thenReturn(taskList);
+        Mockito.when(tasks.getTasksFromNextSevenDaysForUser(user.getId())).thenReturn(taskList);
 
         reminder = NotificationFactory.createNotification(sender, tasks);                
     }
@@ -60,7 +62,7 @@ public class TestNotification {
     @Test
     public void testSendNextSevenDaysReminderForUser() throws NotificationValidationException{
         reminder.sendNextSevenDaysReminderForUser(user);
-        Mockito.verify(sender, Mockito.times(1)).sendTaskNotificationToUser(taskList, user);
+        Mockito.verify(sender, Mockito.times(1)).sendTaskNotificationToUser(taskList, user.getId());
     }
     
     @Test
@@ -77,6 +79,6 @@ public class TestNotification {
         } catch(NotificationValidationException ex){
             Assert.assertTrue(ex.getMessage().contains("Task Task 1 start date too early/too late"));
         }
-      Mockito.verify(sender, Mockito.times(0)).sendTaskNotificationToUser(taskList, user);
-    }    
+      Mockito.verify(sender, Mockito.times(0)).sendTaskNotificationToUser(taskList, user.getId());
+    }
 }

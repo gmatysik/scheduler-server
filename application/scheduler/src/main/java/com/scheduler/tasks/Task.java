@@ -18,13 +18,13 @@ public interface Task {
     
     public List<TaskDTO> getAllTasks();
     
-    public TaskDTO getTask(int id);
+    public TaskDTO get(int id);
     
     public TaskDTO addTask(TaskDTO task) throws TaskValidationException;
 
     public TaskDTO updateTask(TaskDTO task) throws TaskValidationException;
 
-    public void removeTask(int taskId);
+    public void removeTask(long taskId);
 
     public List<TaskDTO> getNextNTasks(Integer numberOfTasks);
 

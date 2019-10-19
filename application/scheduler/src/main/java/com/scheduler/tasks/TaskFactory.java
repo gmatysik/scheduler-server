@@ -5,7 +5,7 @@
  */
 package com.scheduler.tasks;
 
-import com.scheduler.tasks.repository.DefaultTaskRepositoryImpl;
+import com.scheduler.tasks.repository.InMemoryTaskRepositoryImpl;
 import com.scheduler.tasks.repository.TaskRepository;
 import com.scheduler.tasks.validation.TaskValidatorImpl;
 
@@ -19,6 +19,6 @@ public class TaskFactory {
     }
     
     public static Task createTask(){
-        return new TaskImpl(new DefaultTaskRepositoryImpl(), new TaskValidatorImpl());
+        return new TaskImpl(new InMemoryTaskRepositoryImpl(), new TaskValidatorImpl());
     }    
 }

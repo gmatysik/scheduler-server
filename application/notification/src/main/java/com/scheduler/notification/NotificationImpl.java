@@ -10,6 +10,8 @@ import com.scheduler.notification.send.validation.NotificationValidationExceptio
 import com.scheduler.notification.send.validation.NotificationValidator;
 import com.scheduler.tasks.TaskDTO;
 import com.scheduler.tasks.Task;
+import com.scheduler.users.UserDTO;
+
 import java.util.List;
 
 /**
@@ -31,10 +33,10 @@ class NotificationImpl implements Notification{
     }
     
     @Override
-    public void sendNextSevenDaysReminderForUser(long userId) throws NotificationValidationException{
-        List<TaskDTO> taskList = tasks.getTasksFromNextSevenDaysForUser(userId);
+    public void sendNextSevenDaysReminderForUser(UserDTO user) throws NotificationValidationException{
+        List<TaskDTO> taskList = tasks.getTasksFromNextSevenDaysForUser(user.getId());
         validator.validate(taskList);
-        sender.sendTaskNotificationToUser(taskList, userId);
+        sender.sendTaskNotificationToUser(taskList, user.getId());
     }
 
 

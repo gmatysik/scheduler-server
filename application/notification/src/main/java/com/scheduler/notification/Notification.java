@@ -6,6 +6,7 @@
 package com.scheduler.notification;
 
 import com.scheduler.notification.send.validation.NotificationValidationException;
+import com.scheduler.users.UserDTO;
 
 /**
  *
@@ -13,5 +14,5 @@ import com.scheduler.notification.send.validation.NotificationValidationExceptio
  */
 public interface Notification {
         
-        public void sendNextSevenDaysReminderForUser(long userId) throws NotificationValidationException;
+        public void sendNextSevenDaysReminderForUser(UserDTO userId) throws NotificationValidationException;
 }

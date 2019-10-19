@@ -9,15 +9,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 @SpringBootApplication
 @EntityScan("com.scheduler.boot.*")
 @ComponentScan("com.scheduler.boot.*")
+@EnableScheduling
 //@EnableResourceServer
 public class StringBootRestApplication {//extends ResourceServerConfigurerAdapter {
 
@@ -39,7 +37,7 @@ public class StringBootRestApplication {//extends ResourceServerConfigurerAdapte
     }*/
 
     public static void main(String[] args) {
-        SpringApplication springApplication=new SpringApplication(StringBootRestApplication.class);
+        SpringApplication springApplication = new SpringApplication(StringBootRestApplication.class);
         springApplication.run(args);
-    }    
+    }
 }

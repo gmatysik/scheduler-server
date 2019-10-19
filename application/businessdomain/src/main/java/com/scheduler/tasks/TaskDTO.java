@@ -7,17 +7,18 @@ package com.scheduler.tasks;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
 /**
  *
  * @author Grzegorz
  */
-public class TaskDTO {
+public class TaskDTO implements Serializable {
     
     //public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
     
-    private int id;
+    private long id;
     
     @NotEmpty(message = "title.not.empty")
     private String title;
@@ -47,7 +48,7 @@ public class TaskDTO {
     }
 
     
-    public TaskDTO(int id, String title, String start, String end, String description, long userId){
+    public TaskDTO(long id, String title, String start, String end, String description, long userId){
         this.id = id;        
         this.title = title;
         this.start = start;
@@ -59,7 +60,7 @@ public class TaskDTO {
     /**
      * @return the number
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -70,7 +71,7 @@ public class TaskDTO {
     /**
      * @param id the id to set
      */
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

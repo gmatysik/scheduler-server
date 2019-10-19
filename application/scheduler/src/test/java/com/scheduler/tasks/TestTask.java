@@ -5,7 +5,7 @@
  */
 package com.scheduler.tasks;
 
-import com.scheduler.tasks.repository.DefaultTaskRepositoryImpl;
+import com.scheduler.tasks.repository.InMemoryTaskRepositoryImpl;
 import com.scheduler.tasks.repository.TaskRepository;
 import com.scheduler.tasks.validation.TaskValidationException;
 import java.text.ParseException;
@@ -13,9 +13,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import static org.junit.Assert.*;
+
+import com.scheduler.users.User;
+import com.scheduler.users.UserDTO;
+import com.scheduler.users.UserImpl;
+import com.scheduler.users.repository.InMemoryUserRepositoryImpl;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.Date;
+import java.util.Random;
 
 /**
  *
@@ -31,21 +37,30 @@ public class TestTask {
     private TaskDTO taskDTO5;
     
     private TaskRepository taskRepository;
-    
+    private long userId;
+
+    User user = new UserImpl(new InMemoryUserRepositoryImpl());
+
     @Before
     public void setUp(){
-        taskRepository = new DefaultTaskRepositoryImpl();
+        taskRepository = new InMemoryTaskRepositoryImpl();
         task = TaskFactory.createTask(taskRepository);
         initializeTestData();
     }
 
     private void initializeTestData() {
+        userId = new Random().nextLong();
+
+        createTasksForUserId(userId);
+    }
+
+    private void createTasksForUserId(long userId) {
         SimpleDateFormat dt = new SimpleDateFormat(TaskDTO.DATE_FORMAT);
-        
+
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MINUTE, 1);
         String startDate = dt.format(cal.getTime());
-        
+
         cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, 1);
         String startDatePlus1 = dt.format(cal.getTime());
@@ -53,7 +68,7 @@ public class TestTask {
         cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, 8);
         String startDatePlus8 = dt.format(cal.getTime());
-        
+
         cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, -1);
         String startDateMinus1 = dt.format(cal.getTime());
@@ -61,13 +76,13 @@ public class TestTask {
         cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, 4);
         String startDatePlus4 = dt.format(cal.getTime());
-        
-        taskDTO1 = createTask(startDate, null, "Title 1", "Description 1" );
-        taskDTO2 = createTask(startDatePlus8, null, "Title 2", "Description 2" );
-        taskDTO3 = createTask(startDatePlus4, null, "Title 3", "Description 3" );
-        taskDTO4 = createTask(startDateMinus1, null, "Title 4", "Description 4" );
-        taskDTO5 = createTask(startDatePlus1, null, "Title 5", "Description 5" );
-        
+
+        taskDTO1 = createTask(startDate, null, "Title 1", "Description 1", userId);
+        taskDTO2 = createTask(startDatePlus8, null, "Title 2", "Description 2", userId);
+        taskDTO3 = createTask(startDatePlus4, null, "Title 3", "Description 3", userId);
+        taskDTO4 = createTask(startDateMinus1, null, "Title 4", "Description 4", userId);
+        taskDTO5 = createTask(startDatePlus1, null, "Title 5", "Description 5", userId);
+
         try {
             task.addTask(taskDTO1);
             task.addTask(taskDTO2);
@@ -79,12 +94,13 @@ public class TestTask {
         }
     }
 
-    private TaskDTO createTask(String startDate, String endDate, String title, String description) {
+    private TaskDTO createTask(String startDate, String endDate, String title, String description, long userId) {
         TaskDTO taskDTO = new TaskDTO();
         taskDTO.setStart(startDate);
         taskDTO.setEnd(endDate);
         taskDTO.setTitle(title);
         taskDTO.setDescription(description);
+        taskDTO.setUserId(userId);
         return taskDTO;
     }
     
@@ -103,7 +119,7 @@ public class TestTask {
         String title = "Title 5";
         String description = "Description 5";
         
-        TaskDTO taskDTO = createTask(startDate, endDate, title, description);
+        TaskDTO taskDTO = createTask(startDate, endDate, title, description, userId);
         try{            
             taskDTO = task.addTask(taskDTO);            
         } catch(TaskValidationException e){
@@ -111,7 +127,7 @@ public class TestTask {
         }
         assertEquals(5, taskDTO.getId());
         
-        TaskDTO addedTask = task.getTask(5);
+        TaskDTO addedTask = task.get(5);
         assertEquals(5, addedTask.getId());
         assertEquals(startDate, addedTask.getStart());
         assertEquals(endDate, addedTask.getEnd());
@@ -134,7 +150,7 @@ public class TestTask {
         String title = null;
         String description = "Description 5";
         
-        TaskDTO taskDTO = createTask(startDate, endDate, title, description);
+        TaskDTO taskDTO = createTask(startDate, endDate, title, description, userId);
         try{            
             task.addTask(taskDTO);
             fail("Exceptin should have been thrown");
@@ -146,7 +162,7 @@ public class TestTask {
     
     @Test
     public void testUpdateTask() throws TaskValidationException{
-        TaskDTO oldTaskDTO = task.getTask(0);
+        TaskDTO oldTaskDTO = task.get(0);
         
         SimpleDateFormat dt = new SimpleDateFormat(TaskDTO.DATE_FORMAT);
 
@@ -182,7 +198,7 @@ public class TestTask {
         assertNotEquals(updatedTask.getTitle(), oldTaskDTO.getTitle());
         assertNotEquals(updatedTask.getDescription(), oldTaskDTO.getDescription());
         
-        TaskDTO findTaskDTO = task.getTask(0);
+        TaskDTO findTaskDTO = task.get(0);
         assertEquals(findTaskDTO.getId(), updatedTask.getId());
         assertEquals(findTaskDTO.getStart(), updatedTask.getStart());
         assertEquals(findTaskDTO.getEnd(), updatedTask.getEnd());
@@ -193,7 +209,7 @@ public class TestTask {
 
     @Test
     public void testUpdateTask_ValidationException(){
-        TaskDTO oldTaskDTO = task.getTask(0);
+        TaskDTO oldTaskDTO = task.get(0);
         TaskDTO updateDTO = new TaskDTO(oldTaskDTO);
         updateDTO.setEnd(null);
         updateDTO.setStart(null);
@@ -217,10 +233,21 @@ public class TestTask {
     }
 
     @Test
-    public void testFindNextSevenDaysTasksForUser() throws ParseException{
+    public void testFindNextSevenDaysTasksForUser() throws ParseException, TaskValidationException {
+        User user = new UserImpl(new InMemoryUserRepositoryImpl());
+        UserDTO userDTO = new UserDTO(-1, "aaa@ss.dd", "4567");
+        userDTO = user.add(userDTO);
+
+        List<TaskDTO> allTasks = task.getAllTasks();
+        for(TaskDTO taskdto : allTasks){
+            task.removeTask(taskdto.getId());
+        }
+
+        createTasksForUserId(userDTO.getId());
+
         SimpleDateFormat dateFormat = new SimpleDateFormat(TaskDTO.DATE_FORMAT);
 
-        List<TaskDTO> taskList = task.getTasksFromNextSevenDaysForUser(0);
+        List<TaskDTO> taskList = task.getTasksFromNextSevenDaysForUser(userDTO.getId());
         assertEquals(4, taskList.size());
         
         Date date1 = dateFormat.parse(taskList.get(0).getStart());

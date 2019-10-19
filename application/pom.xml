@@ -13,7 +13,7 @@
 	<modules>
 		<module>businessdomain</module>
 		<module>scheduler</module>
-		<module>admin</module>
+		<module>users</module>
 		<module>springboot</module>
 		<module>notification</module>
 		<module>emailnotification</module>

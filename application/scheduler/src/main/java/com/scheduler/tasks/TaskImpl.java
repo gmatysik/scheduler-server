@@ -38,7 +38,7 @@ class TaskImpl implements Task {
     }
     
     @Override
-    public TaskDTO getTask(int id){
+    public TaskDTO get(int id){
         return taskRepository.getTask(id);
     }
     
@@ -56,7 +56,7 @@ class TaskImpl implements Task {
     }
 
     @Override
-    public void removeTask(int taskId) {
+    public void removeTask(long taskId) {
         taskRepository.removeTask(taskId);
     }
 

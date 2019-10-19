@@ -25,12 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
 class TaskSpringServiceImpl implements TaskSpringService{
     
     private Task task;
-    
-    @Autowired
+
     private TaskRepository taskRepository;
 
-    @PostConstruct
-    public void init() {
+    @Autowired
+    public TaskSpringServiceImpl(TaskRepository taskRepository){
+        this.taskRepository = taskRepository;
         task = TaskFactory.createTask(taskRepository);
     }
     
@@ -41,7 +41,7 @@ class TaskSpringServiceImpl implements TaskSpringService{
 
     @Override
     public TaskDTO getTask(Integer taskId) {
-        return task.getTask(taskId);
+        return task.get(taskId);
     }
 
     @Override

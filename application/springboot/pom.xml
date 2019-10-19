@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>com.scheduler</groupId>
-            <artifactId>admin</artifactId>
+            <artifactId>users</artifactId>
             <version>${project.version}</version>        
         </dependency>
         <dependency>
@@ -41,6 +41,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-jwt</artifactId>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security.oauth.boot</groupId>

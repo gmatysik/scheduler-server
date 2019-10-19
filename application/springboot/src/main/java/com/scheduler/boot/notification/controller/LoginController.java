@@ -5,11 +5,9 @@
  */
 package com.scheduler.boot.notification.controller;
 
+import com.scheduler.users.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +24,7 @@ public class LoginController {
     private UserDetailsService userDetailService;
     
     @RequestMapping( path = "/login", method = RequestMethod.POST)
-    public boolean login(@RequestBody User user) {        
+    public boolean login(@RequestBody User user) {
         //TODO: catch usernme not found
         /*UserDetails details = userDetailService.loadUserByUsername(user.getUser());
         if(details == null){

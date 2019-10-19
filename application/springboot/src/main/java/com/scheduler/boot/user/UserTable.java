@@ -5,6 +5,8 @@
  */
 package com.scheduler.boot.user;
 
+import com.scheduler.users.UserDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -72,4 +74,7 @@ public class UserTable {
         this.email = email;
     }
 
+    public UserDTO getDTOObject() {
+        return new UserDTO(id, name, email);
+    }
 }
