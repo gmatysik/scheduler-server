@@ -7,6 +7,10 @@ package com.scheduler.notification.send;
 
 import com.scheduler.notification.send.formatter.TaskListViewFormatter;
 import com.scheduler.tasks.TaskDTO;
+import com.scheduler.users.User;
+import com.scheduler.users.UserDTO;
+import com.scheduler.users.repository.UserRepository;
+
 import java.util.List;
 
 /**
@@ -16,9 +20,11 @@ import java.util.List;
 public abstract class NotificationSender {
  
     private final TaskListViewFormatter notificationListFormatter;
-    
-    public NotificationSender(TaskListViewFormatter notificationListFormatter){
+    private final User user;
+
+    public NotificationSender(TaskListViewFormatter notificationListFormatter, User user){
         this.notificationListFormatter = notificationListFormatter;
+        this.user = user;
     }
     
     private String formatNotificationList(List<TaskDTO> task){
@@ -26,8 +32,9 @@ public abstract class NotificationSender {
     }
     
     public void sendTaskNotificationToUser(List<TaskDTO> task, long userId){
-        sendTaskNotification(formatNotificationList(task));
+        UserDTO userDTO = user.get(userId);
+        sendTaskNotification(formatNotificationList(task), userDTO);
     }
     
-    public abstract void sendTaskNotification(String fomattedNotification);    
+    public abstract void sendTaskNotification(String fomattedNotification, UserDTO userDTO);
 }

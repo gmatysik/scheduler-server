@@ -13,6 +13,8 @@ import com.scheduler.tasks.repository.TaskRepository;
 import com.scheduler.tasks.Task;
 import com.scheduler.tasks.TaskFactory;
 import javax.annotation.PostConstruct;
+
+import com.scheduler.users.UserDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +49,9 @@ class NotificationSpringServiceImpl implements NotificationSpringService{
     @Override
     public void sendNotificationsForUser() {
         try {
-            notification.sendNextSevenDaysReminderForUser(0);
+            UserDTO user = new UserDTO();
+            user.setId(0);
+            notification.sendNextSevenDaysReminderForUser(user);
         } catch (NotificationValidationException ex) {
             LOGGER.error("NotificationValidationException: ", ex);
         }

@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
  * @author Grzegorz
  */
 @Component
-@Profile("production")
+@Profile({"production"})
 class TaskRepositoryImpl implements TaskRepository{
        
     private final static Logger LOGGER = LogManager.getLogger(TaskRepositoryImpl.class);
@@ -45,7 +45,7 @@ class TaskRepositoryImpl implements TaskRepository{
     }
 
     @Override
-    public TaskDTO getTask(int id) {
+    public TaskDTO getTask(long id) {
         Iterable<TaskTable> source = taskRepository.findAll();
         for(TaskTable task : source){
             if(task.getId() == id){
@@ -114,7 +114,7 @@ class TaskRepositoryImpl implements TaskRepository{
    }
 
     @Override
-    public void removeTask(int taskId) {
+    public void removeTask(long taskId) {
         taskRepository.deleteById(taskId);
     }
 
@@ -129,6 +129,9 @@ class TaskRepositoryImpl implements TaskRepository{
         source.stream().forEach((task) -> {
             result.add(task.getDTOObject());
         });
+
+
+
         return result;    
     }
 }

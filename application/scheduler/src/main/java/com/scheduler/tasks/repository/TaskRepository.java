@@ -16,13 +16,13 @@ public interface TaskRepository {
     
     public List<TaskDTO> getAll();
 
-    public TaskDTO getTask(int id);
+    public TaskDTO getTask(long id);
 
     public TaskDTO createTask(TaskDTO task);
 
     public TaskDTO updateTask(TaskDTO task);
 
-    public void removeTask(int taskId);
+    public void removeTask(long taskId);
 
     public List<TaskDTO> findNextTasksForUserForNextNDays(long userId, int days);
 
