@@ -1,11 +1,11 @@
 # scheduler-server
 Scheduler server project
 
-##Build
+## Build
 
 To build the project execute: mvn clean install
 
-##Run
+## Run
 
 This starts the project with mock in memory reposotiry
 
