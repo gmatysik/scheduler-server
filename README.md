@@ -1,5 +1,9 @@
 # scheduler-server
-Scheduler server project
+Scheduler server project. It is being used by client application:
+ https://github.com/gmatysik/scheduler-client
+and uses oAuth server to authorize access:
+https://github.com/gmatysik/oauth-authorization-server
+
 
 ## Build
 
